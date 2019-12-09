@@ -1,4 +1,101 @@
-"""README, Author - Anurag Kumar(mailto:anuragkumarak95@gmail.com)
+#!/usr/bin/env python3
+# encoding: utf-8
+
+# k_means_clust.py	# This file's Name
+
+#from editor import *			# Idea From David Beazley working "en vivo"
+								# Toutes les Libraries indispensables
+
+# Dans le Terminal: PS1="\$ " ===> Un prompt minimal!!!
+
+from pprint import pprint		# A importer toujours...car tres utile
+# print ("dir() === Indispensables en direct dans le Terminal"); pprint(dir())	
+
+
+__ref__ = """
+# ===  References  ===
+# Reworked by < ZZ > : --- on : --- 12/8/19, 20:32
+
+LES REFERENCES SONT OBLIGATOIRES...
+https://github.com/kilimandjaro2/Python
+
+Created by ZZ - 3/5/18, 7:13 PM.
+Copyright (c) 2018 __MyCompanyName__. All free rights .
+
+"""
+
+__doc__ = """
+# ===  Documentation  ===
+# Template  minimum
+	  traiter les sources avec ypf
+	  https://yapf.now.sh/
+(Yet another Python formatter)
+# ===========================
+
+=== Procedure a suivre: ===
+# <Indispensable>
+
+0/Presentation:
+Une seule file qui est auto-suffisante, car elle comporte tout a la fois:
+	-Le programme
+	-Le lancement de L'Execution
+	-Le resultat de l'Execution
+tout cela sans quitter notre Editeur favori: BBEDIT!
+
+1/Edition
+Pour un maximum de clarte:
+	Faire le menage dans les noms de folders et de files (en particulier, des files identiques en .py et .ipynd doivent porter des noms identiques(seule change l'extension)
+	
+Puis Editer dans BBEDITun job en se servant de ce Template.
+
+2/Runs et Tests
+En plus il comporte, via le "if __name__ == '__main__', un moyen de le tester "in extenso" ou de le garder tel quel pour des Imports.
+
+3/Les sorties
+Elles sont incorporees a cette file, via un "Cut and paste" dans la variable "output"
+
+4/Une fois totalement edite, la file est incorporee dans Jupyter via un "Cut and paste"
+
+5/Corrections minimes
+Apres suppression du "Shebang", ce job runs  directement dans un Notebook sous Jupyter
+
+6/Autre solulion (preferable), l'Import
+Il est preferable de faire un import des noms de domaine du fichier  .py, car ainsi on ne conserve qu'un exemplaire de source unique.
+
+
+Et aussi...
+
+Cas de recuperation d'anciens codes:
+====================================
+1/3 Examen du contenu:
+	deux blancs pour l'indentation ===> 1 tabulation
+
+2/3   2to3 for Converting Python 2 scripts to Python 3
+	Ref: la Doc de Python3:
+		https://docs.python.org/2/library/2to3.html
+		
+	explications:
+	https://pythonprogramming.net/converting-python2-to-python3-2to3/
+	et
+	Outil:   2to3 on Line:
+	https://www.pythonconverter.com/
+
+
+3/3	YAPF (Yet another Python formatter)
+	https://yapf.now.sh/
+
+"""
+
+
+def first():
+	"""<first() Documentation>"""
+
+	print("""< # Entering"first"   > """)
+	print("""< # Doing hard Work...   > """)
+	print("""< # END of "first"	> """)
+	return
+	
+	"""README, Author - Anurag Kumar(mailto:anuragkumarak95@gmail.com)
 
 Requirements:
   - sklearn
@@ -19,29 +116,29 @@ Usage:
   1. define 'k' value, 'X' features array and 'hetrogeneity' empty list
 
   2. create initial_centroids,
-        initial_centroids = get_initial_centroids(
-            X,
-            k,
-            seed=0 # seed value for initial centroid generation, None for randomness(default=None)
-            )
+		initial_centroids = get_initial_centroids(
+			X,
+			k,
+			seed=0 # seed value for initial centroid generation, None for randomness(default=None)
+			)
 
   3. find centroids and clusters using kmeans function.
 
-        centroids, cluster_assignment = kmeans(
-            X,
-            k,
-            initial_centroids,
-            maxiter=400,
-            record_heterogeneity=heterogeneity,
-            verbose=True # whether to print logs in console or not.(default=False)
-            )
+		centroids, cluster_assignment = kmeans(
+			X,
+			k,
+			initial_centroids,
+			maxiter=400,
+			record_heterogeneity=heterogeneity,
+			verbose=True # whether to print logs in console or not.(default=False)
+			)
 
 
   4. Plot the loss function, hetrogeneity values for every iteration saved in hetrogeneity list.
-        plot_heterogeneity(
-            heterogeneity,
-            k
-        )
+		plot_heterogeneity(
+			heterogeneity,
+			k
+		)
 
   5. Have fun..
 
@@ -53,147 +150,157 @@ TAG = "K-MEANS-CLUST/ "
 
 
 def get_initial_centroids(data, k, seed=None):
-    """Randomly choose k data points as initial centroids"""
-    if seed is not None:  # useful for obtaining consistent results
-        np.random.seed(seed)
-    n = data.shape[0]  # number of data points
+	"""Randomly choose k data points as initial centroids"""
+	if seed is not None:  # useful for obtaining consistent results
+		np.random.seed(seed)
+	n = data.shape[0]  # number of data points
 
-    # Pick K indices from range [0, N).
-    rand_indices = np.random.randint(0, n, k)
+	# Pick K indices from range [0, N).
+	rand_indices = np.random.randint(0, n, k)
 
-    # Keep centroids as dense format, as many entries will be nonzero due to averaging.
-    # As long as at least one document in a cluster contains a word,
-    # it will carry a nonzero weight in the TF-IDF vector of the centroid.
-    centroids = data[rand_indices, :]
+	# Keep centroids as dense format, as many entries will be nonzero due to averaging.
+	# As long as at least one document in a cluster contains a word,
+	# it will carry a nonzero weight in the TF-IDF vector of the centroid.
+	centroids = data[rand_indices, :]
 
-    return centroids
+	return centroids
 
 
 def centroid_pairwise_dist(X, centroids):
-    return pairwise_distances(X, centroids, metric="euclidean")
+	return pairwise_distances(X, centroids, metric="euclidean")
 
 
 def assign_clusters(data, centroids):
 
-    # Compute distances between each data point and the set of centroids:
-    # Fill in the blank (RHS only)
-    distances_from_centroids = centroid_pairwise_dist(data, centroids)
+	# Compute distances between each data point and the set of centroids:
+	# Fill in the blank (RHS only)
+	distances_from_centroids = centroid_pairwise_dist(data, centroids)
 
-    # Compute cluster assignments for each data point:
-    # Fill in the blank (RHS only)
-    cluster_assignment = np.argmin(distances_from_centroids, axis=1)
+	# Compute cluster assignments for each data point:
+	# Fill in the blank (RHS only)
+	cluster_assignment = np.argmin(distances_from_centroids, axis=1)
 
-    return cluster_assignment
+	return cluster_assignment
 
 
 def revise_centroids(data, k, cluster_assignment):
-    new_centroids = []
-    for i in range(k):
-        # Select all data points that belong to cluster i. Fill in the blank (RHS only)
-        member_data_points = data[cluster_assignment == i]
-        # Compute the mean of the data points. Fill in the blank (RHS only)
-        centroid = member_data_points.mean(axis=0)
-        new_centroids.append(centroid)
-    new_centroids = np.array(new_centroids)
+	new_centroids = []
+	for i in range(k):
+		# Select all data points that belong to cluster i. Fill in the blank (RHS only)
+		member_data_points = data[cluster_assignment == i]
+		# Compute the mean of the data points. Fill in the blank (RHS only)
+		centroid = member_data_points.mean(axis=0)
+		new_centroids.append(centroid)
+	new_centroids = np.array(new_centroids)
 
-    return new_centroids
+	return new_centroids
 
 
 def compute_heterogeneity(data, k, centroids, cluster_assignment):
 
-    heterogeneity = 0.0
-    for i in range(k):
+	heterogeneity = 0.0
+	for i in range(k):
 
-        # Select all data points that belong to cluster i. Fill in the blank (RHS only)
-        member_data_points = data[cluster_assignment == i, :]
+		# Select all data points that belong to cluster i. Fill in the blank (RHS only)
+		member_data_points = data[cluster_assignment == i, :]
 
-        if member_data_points.shape[0] > 0:  # check if i-th cluster is non-empty
-            # Compute distances from centroid to data points (RHS only)
-            distances = pairwise_distances(
-                member_data_points, [centroids[i]], metric="euclidean"
-            )
-            squared_distances = distances ** 2
-            heterogeneity += np.sum(squared_distances)
+		if member_data_points.shape[0] > 0:  # check if i-th cluster is non-empty
+			# Compute distances from centroid to data points (RHS only)
+			distances = pairwise_distances(
+				member_data_points, [centroids[i]], metric="euclidean"
+			)
+			squared_distances = distances ** 2
+			heterogeneity += np.sum(squared_distances)
 
-    return heterogeneity
+	return heterogeneity
 
 
 from matplotlib import pyplot as plt
 
 
 def plot_heterogeneity(heterogeneity, k):
-    plt.figure(figsize=(7, 4))
-    plt.plot(heterogeneity, linewidth=4)
-    plt.xlabel("# Iterations")
-    plt.ylabel("Heterogeneity")
-    plt.title("Heterogeneity of clustering over time, K={0:d}".format(k))
-    plt.rcParams.update({"font.size": 16})
-    plt.show()
+	plt.figure(figsize=(7, 4))
+	plt.plot(heterogeneity, linewidth=4)
+	plt.xlabel("# Iterations")
+	plt.ylabel("Heterogeneity")
+	plt.title("Heterogeneity of clustering over time, K={0:d}".format(k))
+	plt.rcParams.update({"font.size": 16})
+	plt.show()
 
 
 def kmeans(
-    data, k, initial_centroids, maxiter=500, record_heterogeneity=None, verbose=False
+	data, k, initial_centroids, maxiter=500, record_heterogeneity=None, verbose=False
 ):
-    """This function runs k-means on given data and initial set of centroids.
-       maxiter: maximum number of iterations to run.(default=500)
-       record_heterogeneity: (optional) a list, to store the history of heterogeneity as function of iterations
-                             if None, do not store the history.
-       verbose: if True, print how many data points changed their cluster labels in each iteration"""
-    centroids = initial_centroids[:]
-    prev_cluster_assignment = None
+	"""This function runs k-means on given data and initial set of centroids.
+	   maxiter: maximum number of iterations to run.(default=500)
+	   record_heterogeneity: (optional) a list, to store the history of heterogeneity as function of iterations
+							 if None, do not store the history.
+	   verbose: if True, print how many data points changed their cluster labels in each iteration"""
+	centroids = initial_centroids[:]
+	prev_cluster_assignment = None
 
-    for itr in range(maxiter):
-        if verbose:
-            print(itr, end="")
+	for itr in range(maxiter):
+		if verbose:
+			print(itr, end="")
 
-        # 1. Make cluster assignments using nearest centroids
-        cluster_assignment = assign_clusters(data, centroids)
+		# 1. Make cluster assignments using nearest centroids
+		cluster_assignment = assign_clusters(data, centroids)
 
-        # 2. Compute a new centroid for each of the k clusters, averaging all data points assigned to that cluster.
-        centroids = revise_centroids(data, k, cluster_assignment)
+		# 2. Compute a new centroid for each of the k clusters, averaging all data points assigned to that cluster.
+		centroids = revise_centroids(data, k, cluster_assignment)
 
-        # Check for convergence: if none of the assignments changed, stop
-        if (
-            prev_cluster_assignment is not None
-            and (prev_cluster_assignment == cluster_assignment).all()
-        ):
-            break
+		# Check for convergence: if none of the assignments changed, stop
+		if (
+			prev_cluster_assignment is not None
+			and (prev_cluster_assignment == cluster_assignment).all()
+		):
+			break
 
-        # Print number of new assignments
-        if prev_cluster_assignment is not None:
-            num_changed = np.sum(prev_cluster_assignment != cluster_assignment)
-            if verbose:
-                print(
-                    "    {0:5d} elements changed their cluster assignment.".format(
-                        num_changed
-                    )
-                )
+		# Print number of new assignments
+		if prev_cluster_assignment is not None:
+			num_changed = np.sum(prev_cluster_assignment != cluster_assignment)
+			if verbose:
+				print(
+					"	{0:5d} elements changed their cluster assignment.".format(
+						num_changed
+					)
+				)
 
-        # Record heterogeneity convergence metric
-        if record_heterogeneity is not None:
-            # YOUR CODE HERE
-            score = compute_heterogeneity(data, k, centroids, cluster_assignment)
-            record_heterogeneity.append(score)
+		# Record heterogeneity convergence metric
+		if record_heterogeneity is not None:
+			# YOUR CODE HERE
+			score = compute_heterogeneity(data, k, centroids, cluster_assignment)
+			record_heterogeneity.append(score)
 
-        prev_cluster_assignment = cluster_assignment[:]
+		prev_cluster_assignment = cluster_assignment[:]
 
-    return centroids, cluster_assignment
+	return centroids, cluster_assignment
 
 
 # Mock test below
-if False:  # change to true to run this test case.
-    import sklearn.datasets as ds
+# if False:  # change to true to run this test case.
+if True:  # change to true to run this test case.
+	import sklearn.datasets as ds
 
-    dataset = ds.load_iris()
-    k = 3
-    heterogeneity = []
-    initial_centroids = get_initial_centroids(dataset["data"], k, seed=0)
-    centroids, cluster_assignment = kmeans(
-        dataset["data"],
-        k,
-        initial_centroids,
-        maxiter=400,
-        record_heterogeneity=heterogeneity,
-        verbose=True,
-    )
-    plot_heterogeneity(heterogeneity, k)
+	dataset = ds.load_iris()
+	k = 3
+	heterogeneity = []
+	initial_centroids = get_initial_centroids(dataset["data"], k, seed=0)
+	centroids, cluster_assignment = kmeans(
+		dataset["data"],
+		k,
+		initial_centroids,
+		maxiter=400,
+		record_heterogeneity=heterogeneity,
+		verbose=True,
+	)
+	plot_heterogeneity(heterogeneity, k)
+	
+	
+output = """
+01	    8 elements changed their cluster assignment.
+2	    3 elements changed their cluster assignment.
+3	    2 elements changed their cluster assignment.
+4logout
+
+"""
